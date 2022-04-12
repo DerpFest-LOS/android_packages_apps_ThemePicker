@@ -66,6 +66,7 @@ android_library {
         "renderscript_toolkit",
         "WallpaperPicker2Lib",
         "SettingsLibSettingsTheme",
+        "SystemUIFlagsLib",
         "SystemUI-statsd",
         "styleprotoslite",
         "androidx.lifecycle_lifecycle-livedata-ktx",
