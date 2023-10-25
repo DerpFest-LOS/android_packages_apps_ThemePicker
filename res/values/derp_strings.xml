@@ -7,4 +7,7 @@
 
     <string name="qs_gradient_title">Quick settings gradient theme</string>
     <string name="qs_gradient_dark_theme_only">This feature is only available in dark theme</string>
+
+    <string name="udfps_animation_title">Fingerprint animations</string>
+    <string name="new_title">New</string>
 </resources>

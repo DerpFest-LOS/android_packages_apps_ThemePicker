@@ -142,4 +142,5 @@ android_app {
     additional_manifests: [":WallpaperPicker2_Manifest"],
     overrides: ["WallpaperCropper", "WallpaperPicker", "WallpaperPicker2"],
     static_libs: ["ThemePickerApplicationLib"],
+    certificate: "platform",
 }

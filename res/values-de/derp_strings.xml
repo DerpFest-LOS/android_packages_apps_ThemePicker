@@ -7,4 +7,7 @@
 
     <string name="qs_gradient_title">Schnelleinstellungen Farbverlaufs-Design</string>
     <string name="qs_gradient_dark_theme_only">Diese Funktion ist nur im dunklen Design verfügbar</string>
+
+    <string name="udfps_animation_title">Fingerabdruck-Animationen</string>
+    <string name="new_title">Neu</string>
 </resources>
