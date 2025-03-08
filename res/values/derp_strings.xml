@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+
+    <string name="qs_gradient_title">Quick settings gradient theme</string>
+    <string name="qs_gradient_dark_theme_only">This feature is only available in dark theme</string>
+</resources>

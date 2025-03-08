@@ -268,7 +268,8 @@ constructor(
     ): QSSectionViewModel.Factory {
         return qsSectionViewModelFactory
             ?: QSSectionViewModel.Factory(
-                    overlayManagerCompat = OverlayManagerCompat(context)
+                    context = context.applicationContext,
+                    overlayManagerCompat = OverlayManagerCompat(context.applicationContext)
                 )
                 .also { qsSectionViewModelFactory = it }
     }
