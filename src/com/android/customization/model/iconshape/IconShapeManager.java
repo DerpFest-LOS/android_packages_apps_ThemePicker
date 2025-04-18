@@ -58,7 +58,7 @@ public class IconShapeManager implements CustomizationManager<IconShapeOption> {
     @Override
     public void apply(IconShapeOption option, @Nullable Callback callback) {
         if (!persistOverlay(option)) {
-            Toast failed = Toast.makeText(mContext, "Failed to apply font, reboot to try again.", Toast.LENGTH_SHORT);
+            Toast failed = Toast.makeText(mContext, "Failed to apply icon shape, reboot to try again.", Toast.LENGTH_SHORT);
             failed.show();
             if (callback != null) {
                 callback.onError(null);
