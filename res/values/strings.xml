@@ -169,6 +169,9 @@
 
     <!-- Title of a page that shows the user the preview of a font selection [CHAR_LIMIT=20] -->
     <string name="preview_name_font">Font</string>
+    
+    <!-- Title of a page that shows the user the preview of a clock font selection [CHAR_LIMIT=20] -->
+    <string name="preview_name_lockfont">Clock Font</string>
 
     <!-- Title of a page that shows the user the preview of a set of icons [CHAR_LIMIT=20] -->
     <string name="preview_name_icon">Icon</string>
