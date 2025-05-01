@@ -56,10 +56,15 @@ constructor(
         }
     }
 
+    private var wasGradientEnabled = false
+
     init {
         // Register for UI mode changes
         val filter = IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED)
         context.applicationContext.registerReceiver(uiModeChangeReceiver, filter)
+        
+        // Initialize wasGradientEnabled based on current state
+        wasGradientEnabled = isSwitchOn()
     }
 
     override fun onCleared() {
@@ -92,6 +97,12 @@ constructor(
                 disableGradient()
             }
         }
+        // If switching to dark mode and gradient was previously enabled, reenable it
+        else if (isDarkMode && wasGradientEnabled) {
+            viewModelScope.launch {
+                enableGradient()
+            }
+        }
     }
 
     /** Disable the gradient overlay */
@@ -121,9 +132,11 @@ constructor(
             if (switch.isChecked) {
                 disableGradient()
                 switch.isChecked = false
+                wasGradientEnabled = false
             } else {
                 enableGradient()
                 switch.isChecked = true
+                wasGradientEnabled = true
             }
         }
     }
