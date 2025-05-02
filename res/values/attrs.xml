@@ -23,4 +23,18 @@
         <attr name="android:tint" />
         <attr name="android:alpha" />
     </declare-styleable>
+
+    <declare-styleable name="BottomActionBar">
+        <attr name="actionText" format="string" />
+        <attr name="actionTextColor" format="color" />
+        <attr name="actionTextSize" format="dimension" />
+        <attr name="actionTextStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+        </attr>
+        <attr name="actionTextVisibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="gone" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

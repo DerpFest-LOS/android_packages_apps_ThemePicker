@@ -577,4 +577,11 @@
     [CHAR LIMIT=128].
     -->
     <string name="custom_clocks_label">Custom Clocks</string>
+
+    <string name="status_bar_icons_title">Status bar icons</string>
+    <string name="wifi_icon_preview">Wi-Fi icon preview</string>
+    <string name="signal_icon_preview">Signal icon preview</string>
+    <string name="error_loading_status_bar_icons">Error loading status bar icons</string>
+    <string name="status_bar_icons_description">Customize your status bar icons</string>
+    <string name="apply">Apply</string>
 </resources>

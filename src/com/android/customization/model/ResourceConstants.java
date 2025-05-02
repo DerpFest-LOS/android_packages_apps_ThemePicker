@@ -68,6 +68,8 @@ public interface ResourceConstants {
     String OVERLAY_CATEGORY_ICON_SYSUI = "android.theme.customization.icon_pack.systemui";
     String OVERLAY_CATEGORY_ICON_LAUNCHER = "android.theme.customization.icon_pack.launcher";
     String OVERLAY_CATEGORY_ICON_THEMEPICKER = "android.theme.customization.icon_pack.themepicker";
+    String OVERLAY_CATEGORY_ICON_WIFI = "android.theme.customization.wifi_icon";
+    String OVERLAY_CATEGORY_ICON_SIGNAL = "android.theme.customization.signal_icon";
 
     /**
      * Global Android theme category (default theme prebundled with the OS)

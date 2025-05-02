@@ -284,6 +284,11 @@ public final class DefaultCustomizationSections implements CustomizationSections
                 sectionControllers.add(new IconShapeSectionController(
                         IconShapeManager.getInstance(activity, new OverlayManagerCompat(activity)),
                         sectionNavigationController));
+
+                // Status bar icon selection section.
+                sectionControllers.add(new StatusBarIconSectionController(
+                        StatusBarIconManager.getInstance(activity, new OverlayManagerCompat(activity)),
+                        sectionNavigationController));
                 break;
         }
 
