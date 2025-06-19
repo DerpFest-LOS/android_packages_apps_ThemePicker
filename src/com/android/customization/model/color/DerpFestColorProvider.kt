@@ -56,6 +56,12 @@ class DerpFestColorProvider(private val context: Context) {
             builder.addOverlayPackage(ResourceConstants.OVERLAY_CATEGORY_COLOR, toColorString(color))
             builder.addOverlayPackage(ResourceConstants.OVERLAY_CATEGORY_SYSTEM_PALETTE, toColorString(color))
 
+            // Add background tinting for vader red
+            if (name == "Vader Red") {
+                builder.addOverlayPackage(ResourceConstants.OVERLAY_CATEGORY_BG_COLOR, toColorString(color))
+                builder.addOverlayPackage(ResourceConstants.OVERLAY_TINT_BACKGROUND, "1")
+            }
+
             colors.add(builder.build())
         }
 
