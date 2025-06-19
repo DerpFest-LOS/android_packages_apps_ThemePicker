@@ -19,9 +19,6 @@ import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
 import static com.android.customization.model.ResourceConstants.SETTINGS_PACKAGE;
 import static com.android.customization.model.ResourceConstants.SYSUI_PACKAGE;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_WIFI;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_SYSUI;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_SETTINGS;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_ANDROID;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -154,8 +151,6 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
                return SETTINGS_PACKAGE;
            case OVERLAY_CATEGORY_ICON_ANDROID:
                return ANDROID_PACKAGE;
-           case OVERLAY_CATEGORY_ICON_WIFI:
-               return SYSUI_PACKAGE;
            default:
                return null;
        }
@@ -177,7 +172,8 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
      * @return whether this icon option has overlays and previews for all the required packages
      */
     public boolean isValid(Context context) {
-        return mOverlayPackageNames.containsKey(OVERLAY_CATEGORY_ICON_WIFI);
+        return mOverlayPackageNames.keySet().size() ==
+                ResourceConstants.getPackagesToOverlay(context).length;
     }
 
     public boolean isDefault() {
