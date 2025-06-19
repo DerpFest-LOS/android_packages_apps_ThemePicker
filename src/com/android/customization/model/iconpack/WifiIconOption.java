@@ -16,8 +16,6 @@
 package com.android.customization.model.iconpack;
 
 import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
-import static com.android.customization.model.ResourceConstants.SETTINGS_PACKAGE;
-import static com.android.customization.model.ResourceConstants.SYSUI_PACKAGE;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_WIFI;
 
 import android.content.Context;
@@ -145,11 +143,7 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
 
     private String determinePackage(String category) {
        switch(category) {
-           case OVERLAY_CATEGORY_ICON_SYSUI:
-               return SYSUI_PACKAGE;
-           case OVERLAY_CATEGORY_ICON_SETTINGS:
-               return SETTINGS_PACKAGE;
-           case OVERLAY_CATEGORY_ICON_ANDROID:
+           case OVERLAY_CATEGORY_ICON_WIFI:
                return ANDROID_PACKAGE;
            default:
                return null;
