@@ -95,12 +95,18 @@ public interface ResourceConstants {
     };
 
     String[] WIFI_ICONS_FOR_PREVIEW = {
+            "ic_wifi",
             "ic_wifi_0",
             "ic_wifi_1", 
             "ic_wifi_2",
             "ic_wifi_3",
             "ic_wifi_4",
-            "ic_wifi_off"
+            "ic_wifi_off",
+            "ic_wifi_signal_0",
+            "ic_wifi_signal_1",
+            "ic_wifi_signal_2",
+            "ic_wifi_signal_3",
+            "ic_wifi_signal_4"
     };
 
     /**
