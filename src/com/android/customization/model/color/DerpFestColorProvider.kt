@@ -42,12 +42,12 @@ class DerpFestColorProvider(private val context: Context) {
             builder.seedColor = color
             builder.source = COLOR_SOURCE_PRESET
             builder.type = ColorType.DERPFEST_COLOR
-            builder.style = Style.TONAL_SPOT
+            builder.style = Style.VIBRANT
             builder.index = index + 1
 
             // Set light and dark theme colors
-            val lightColorScheme = ColorScheme(color, /* darkTheme= */ false, Style.TONAL_SPOT)
-            val darkColorScheme = ColorScheme(color, /* darkTheme= */ true, Style.TONAL_SPOT)
+            val lightColorScheme = ColorScheme(color, /* darkTheme= */ false, Style.VIBRANT)
+            val darkColorScheme = ColorScheme(color, /* darkTheme= */ true, Style.VIBRANT)
             
             builder.lightColors = getLightColorPreview(lightColorScheme)
             builder.darkColors = getDarkColorPreview(darkColorScheme)
@@ -55,6 +55,12 @@ class DerpFestColorProvider(private val context: Context) {
             // Add overlay packages
             builder.addOverlayPackage(ResourceConstants.OVERLAY_CATEGORY_COLOR, toColorString(color))
             builder.addOverlayPackage(ResourceConstants.OVERLAY_CATEGORY_SYSTEM_PALETTE, toColorString(color))
+
+            // Add background tinting for vader red
+            if (name == "Vader Red") {
+                builder.addOverlayPackage(ResourceConstants.OVERLAY_CATEGORY_BG_COLOR, toColorString(color))
+                builder.addOverlayPackage(ResourceConstants.OVERLAY_TINT_BACKGROUND, "1")
+            }
 
             colors.add(builder.build())
         }

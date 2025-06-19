@@ -69,7 +69,8 @@ public interface ResourceConstants {
     String OVERLAY_CATEGORY_ICON_LAUNCHER = "android.theme.customization.icon_pack.launcher";
     String OVERLAY_CATEGORY_ICON_THEMEPICKER = "android.theme.customization.icon_pack.themepicker";
     String OVERLAY_CATEGORY_ICON_WIFI = "android.theme.customization.wifi_icon";
-    String OVERLAY_CATEGORY_ICON_SIGNAL = "android.theme.customization.signal_icon";
+    String OVERLAY_CATEGORY_BG_COLOR = "android.theme.customization.bg_color";
+    String OVERLAY_TINT_BACKGROUND = "android.theme.customization.tint_background";
 
     /**
      * Global Android theme category (default theme prebundled with the OS)
@@ -95,18 +96,12 @@ public interface ResourceConstants {
     };
 
     String[] WIFI_ICONS_FOR_PREVIEW = {
-            "ic_wifi",
-            "ic_wifi_0",
-            "ic_wifi_1", 
-            "ic_wifi_2",
-            "ic_wifi_3",
-            "ic_wifi_4",
-            "ic_wifi_off",
             "ic_wifi_signal_0",
             "ic_wifi_signal_1",
             "ic_wifi_signal_2",
             "ic_wifi_signal_3",
-            "ic_wifi_signal_4"
+            "ic_wifi_signal_4",
+            "ic_wifi_signal_0"
     };
 
     /**

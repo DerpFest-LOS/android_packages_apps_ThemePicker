@@ -52,12 +52,13 @@ public class WifiIconOptionProvider {
     public WifiIconOptionProvider(Context context, OverlayManagerCompat manager) {
         mContext = context;
         mPm = context.getPackageManager();
-        String[] targetPackages = ResourceConstants.getPackagesToOverlay(context);
+        // For wifi icons, we only want to look for overlays targeting SYSUI_PACKAGE
+        String[] targetPackages = new String[]{SYSUI_PACKAGE};
         mWifiIconsOverlayPackages.addAll(manager.getOverlayPackagesForCategory(
                 OVERLAY_CATEGORY_ICON_WIFI, UserHandle.myUserId(), targetPackages));
         mOverlayPackages = new ArrayList<>();
         mOverlayPackages.addAll(manager.getOverlayPackagesForCategory(OVERLAY_CATEGORY_ICON_WIFI,
-                UserHandle.myUserId(), ResourceConstants.getPackagesToOverlay(mContext)));
+                UserHandle.myUserId(), targetPackages));
     }
 
     public List<WifiIconOption> getOptions() {
@@ -131,8 +132,8 @@ public class WifiIconOptionProvider {
     private boolean tryDiscoverWifiIcons(WifiIconOption option, String overlayPackage) {
         try {
             Resources resources = mPm.getResourcesForApplication(overlayPackage);
-            // Try common WiFi icon patterns
-            String[] patterns = {"ic_wifi", "wifi", "ic_signal_wifi", "signal_wifi"};
+            // Try common WiFi icon patterns matching the actual naming convention
+            String[] patterns = {"ic_wifi_signal_0", "ic_wifi_signal_1", "ic_wifi_signal_2", "ic_wifi_signal_3", "ic_wifi_signal_4"};
             
             for (String pattern : patterns) {
                 try {
@@ -174,6 +175,8 @@ public class WifiIconOptionProvider {
             throws NameNotFoundException, NotFoundException {
         final Resources resources = ANDROID_PACKAGE.equals(packageName)
                 ? Resources.getSystem()
+                : SYSUI_PACKAGE.equals(packageName)
+                ? mPm.getResourcesForApplication(SYSUI_PACKAGE)
                 : mPm.getResourcesForApplication(packageName);
         return resources.getDrawable(
                 resources.getIdentifier(drawableName, "drawable", packageName), null);
@@ -183,7 +186,7 @@ public class WifiIconOptionProvider {
         WifiIconOption option = new WifiIconOption(mContext.getString(R.string.default_theme_title), true);
         boolean hasIcons = false;
         
-        // Try to load from system resources first
+        // Try to load from Android framework resources first (where default icons typically reside)
         try {
             for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
                 try {
@@ -194,10 +197,10 @@ public class WifiIconOptionProvider {
                 }
             }
         } catch (NameNotFoundException e) {
-            Log.w(TAG, "Couldn't load default WiFi icons from system", e);
+            Log.w(TAG, "Couldn't load default WiFi icons from Android framework", e);
         }
 
-        // If no WiFi icons found in system, try to load from SystemUI
+        // If no icons found in Android framework, try SystemUI
         if (!hasIcons) {
             try {
                 for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
@@ -213,19 +216,19 @@ public class WifiIconOptionProvider {
             }
         }
 
-        // If still no icons, try to discover them
+        // If still no icons, try to discover them in Android framework
         if (!hasIcons) {
             hasIcons = tryDiscoverWifiIcons(option, ANDROID_PACKAGE);
         }
 
-        // If still no icons, try SystemUI
+        // If still no icons, try to discover them in SystemUI
         if (!hasIcons) {
             hasIcons = tryDiscoverWifiIcons(option, SYSUI_PACKAGE);
         }
 
         // If still no icons, add a fallback icon or skip this option
         if (!hasIcons) {
-            Log.w(TAG, "No default WiFi icons found, skipping default option");
+            Log.w(TAG, "No default WiFi icons found in Android framework or SystemUI, skipping default option");
             return;
         }
 

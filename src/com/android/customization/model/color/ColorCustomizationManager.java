@@ -22,6 +22,8 @@ import static android.stats.style.StyleEnums.COLOR_SOURCE_UNSPECIFIED;
 
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_COLOR;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_SYSTEM_PALETTE;
+import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_BG_COLOR;
+import static com.android.customization.model.ResourceConstants.OVERLAY_TINT_BACKGROUND;
 import static com.android.customization.model.color.ColorOptionsProvider.COLOR_SOURCE_PRESET;
 import static com.android.customization.model.color.ColorOptionsProvider.OVERLAY_COLOR_BOTH;
 import static com.android.customization.model.color.ColorOptionsProvider.OVERLAY_COLOR_INDEX;
@@ -74,6 +76,8 @@ public class ColorCustomizationManager implements CustomizationManager<ColorOpti
         COLOR_OVERLAY_SETTINGS.add(OVERLAY_CATEGORY_COLOR);
         COLOR_OVERLAY_SETTINGS.add(OVERLAY_COLOR_SOURCE);
         COLOR_OVERLAY_SETTINGS.add(OVERLAY_THEME_STYLE);
+        COLOR_OVERLAY_SETTINGS.add(OVERLAY_CATEGORY_BG_COLOR);
+        COLOR_OVERLAY_SETTINGS.add(OVERLAY_TINT_BACKGROUND);
     }
 
     private static ColorCustomizationManager sColorCustomizationManager;
