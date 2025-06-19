@@ -14,6 +14,9 @@
     <!-- Title of a page that shows the user the preview of a clock font selection [CHAR_LIMIT=20] -->
     <string name="preview_name_lockfont">Clock Font</string>
 
+    <!-- Title of a page that shows the user the preview of a set of wifi icons [CHAR_LIMIT=20] -->
+    <string name="preview_name_wifi_icon">Wifi Icon</string>
+
     <!-- The revised title for the tab with a default set of color options. [CHAR_LIMIT=20]-->
     <string name="preset_color_tab_3">DerpFest colors</string>
 </resources>

@@ -68,6 +68,7 @@ public interface ResourceConstants {
     String OVERLAY_CATEGORY_ICON_SYSUI = "android.theme.customization.icon_pack.systemui";
     String OVERLAY_CATEGORY_ICON_LAUNCHER = "android.theme.customization.icon_pack.launcher";
     String OVERLAY_CATEGORY_ICON_THEMEPICKER = "android.theme.customization.icon_pack.themepicker";
+    String OVERLAY_CATEGORY_ICON_WIFI = "android.theme.customization.wifi_icon";
 
     /**
      * Global Android theme category (default theme prebundled with the OS)
@@ -90,6 +91,15 @@ public interface ResourceConstants {
             "ic_qs_battery_saver",
             "ic_signal_cellular_3_4_bar",
             "ic_battery_80_24dp"
+    };
+
+    String[] WIFI_ICONS_FOR_PREVIEW = {
+            "ic_wifi_signal_0",
+            "ic_wifi_signal_1",
+            "ic_wifi_signal_2",
+            "ic_wifi_signal_3",
+            "ic_wifi_signal_4",
+            "ic_wifi_signal_0"
     };
 
     /**

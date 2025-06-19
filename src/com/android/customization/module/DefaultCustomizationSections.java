@@ -15,6 +15,8 @@ import com.android.customization.model.font.FontSectionController;
 import com.android.customization.model.grid.GridOptionsManager;
 import com.android.customization.model.iconpack.IconPackManager;
 import com.android.customization.model.iconpack.IconPackSectionController;
+import com.android.customization.model.iconpack.WifiIconManager;
+import com.android.customization.model.iconpack.WifiIconSectionController;
 import com.android.customization.model.iconshape.IconShapeManager;
 import com.android.customization.model.iconshape.IconShapeSectionController;
 import com.android.customization.model.lockfont.LockFontSectionController;
@@ -273,6 +275,11 @@ public final class DefaultCustomizationSections implements CustomizationSections
                 // Icon pack selection section.
                 sectionControllers.add(new IconPackSectionController(
                         IconPackManager.getInstance(activity, new OverlayManagerCompat(activity)),
+                        sectionNavigationController));
+
+                // Wifi icon selection section.
+                sectionControllers.add(new WifiIconSectionController(
+                        WifiIconManager.getInstance(activity, new OverlayManagerCompat(activity)),
                         sectionNavigationController));
 
                 // Font selection section.
