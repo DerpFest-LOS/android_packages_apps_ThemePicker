@@ -132,8 +132,8 @@ public class WifiIconOptionProvider {
     private boolean tryDiscoverWifiIcons(WifiIconOption option, String overlayPackage) {
         try {
             Resources resources = mPm.getResourcesForApplication(overlayPackage);
-            // Try common WiFi icon patterns
-            String[] patterns = {"ic_wifi", "wifi", "ic_signal_wifi", "signal_wifi"};
+            // Try common WiFi icon patterns matching the actual naming convention
+            String[] patterns = {"ic_wifi_signal_0", "ic_wifi_signal_1", "ic_wifi_signal_2", "ic_wifi_signal_3", "ic_wifi_signal_4"};
             
             for (String pattern : patterns) {
                 try {
