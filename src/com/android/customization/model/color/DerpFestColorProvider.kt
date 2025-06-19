@@ -42,12 +42,12 @@ class DerpFestColorProvider(private val context: Context) {
             builder.seedColor = color
             builder.source = COLOR_SOURCE_PRESET
             builder.type = ColorType.DERPFEST_COLOR
-            builder.style = Style.TONAL_SPOT
+            builder.style = Style.VIBRANT
             builder.index = index + 1
 
             // Set light and dark theme colors
-            val lightColorScheme = ColorScheme(color, /* darkTheme= */ false, Style.TONAL_SPOT)
-            val darkColorScheme = ColorScheme(color, /* darkTheme= */ true, Style.TONAL_SPOT)
+            val lightColorScheme = ColorScheme(color, /* darkTheme= */ false, Style.VIBRANT)
+            val darkColorScheme = ColorScheme(color, /* darkTheme= */ true, Style.VIBRANT)
             
             builder.lightColors = getLightColorPreview(lightColorScheme)
             builder.darkColors = getDarkColorPreview(darkColorScheme)
