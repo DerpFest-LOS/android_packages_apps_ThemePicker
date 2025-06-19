@@ -72,6 +72,20 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
 
     @Override
     public void bindThumbnailTile(View view) {
+        if (mIcons == null || mIcons.isEmpty()) {
+            // If no icons are available, hide the icon view
+            ImageView iconView = view.findViewById(R.id.icon_section_tile);
+            if (iconView != null) {
+                iconView.setVisibility(View.GONE);
+            }
+            ImageView optionIcon = view.findViewById(R.id.option_icon);
+            if (optionIcon != null) {
+                optionIcon.setVisibility(View.GONE);
+            }
+            view.setContentDescription(mTitle);
+            return;
+        }
+
         Resources res = view.getContext().getResources();
         Drawable icon = mIcons.get(THUMBNAIL_ICON_POSITION)
                 .getConstantState().newDrawable().mutate();
@@ -116,6 +130,11 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
     }
 
     public void bindPreview(ViewGroup container) {
+        if (mIcons == null || mIcons.isEmpty()) {
+            // If no icons are available, don't try to bind preview
+            return;
+        }
+
         ViewGroup cardBody = container.findViewById(R.id.theme_preview_card_body_container);
         if (cardBody.getChildCount() == 0) {
             LayoutInflater.from(container.getContext()).inflate(
@@ -163,5 +182,9 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
 
     public boolean isDefault() {
         return mIsDefault;
+    }
+
+    public List<Drawable> getIcons() {
+        return mIcons;
     }
 } 

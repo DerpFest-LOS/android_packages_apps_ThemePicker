@@ -16,6 +16,7 @@
 package com.android.customization.model.iconpack;
 
 import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
+import static com.android.customization.model.ResourceConstants.SYSUI_PACKAGE;
 import static com.android.customization.model.ResourceConstants.ICONS_FOR_PREVIEW;
 import static com.android.customization.model.ResourceConstants.WIFI_ICONS_FOR_PREVIEW;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_WIFI;
@@ -72,32 +73,57 @@ public class WifiIconOptionProvider {
         for (String overlayPackage : mOverlayPackages) {
             WifiIconOption option = addOrUpdateOption(optionsByPrefix, overlayPackage,
                     OVERLAY_CATEGORY_ICON_WIFI);
-            try {
-                for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
-                    option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
+            if (option != null) {
+                try {
+                    boolean hasIcons = false;
+                    for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
+                        try {
+                            option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
+                            hasIcons = true;
+                        } catch (NotFoundException e) {
+                            Log.d(TAG, String.format("Icon %s not found in %s", iconName, overlayPackage));
+                        }
+                    }
+                    if (!hasIcons) {
+                        Log.w(TAG, String.format("No WiFi icons found in overlay package %s", overlayPackage));
+                    }
+                } catch (NameNotFoundException e) {
+                    Log.w(TAG, String.format("Couldn't load wifi icon overlay details for %s, will skip it",
+                            overlayPackage), e);
                 }
-            } catch (NotFoundException | NameNotFoundException e) {
-                Log.w(TAG, String.format("Couldn't load wifi icon overlay details for %s, will skip it",
-                        overlayPackage), e);
             }
         }
 
         for (String overlayPackage : mWifiIconsOverlayPackages) {
             WifiIconOption option = addOrUpdateOption(optionsByPrefix, overlayPackage, OVERLAY_CATEGORY_ICON_WIFI);
-            try {
-                for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
-                    option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
+            if (option != null) {
+                try {
+                    boolean hasIcons = false;
+                    for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
+                        try {
+                            option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
+                            hasIcons = true;
+                        } catch (NotFoundException e) {
+                            Log.d(TAG, String.format("Icon %s not found in %s", iconName, overlayPackage));
+                        }
+                    }
+                    if (!hasIcons) {
+                        Log.w(TAG, String.format("No WiFi icons found in overlay package %s", overlayPackage));
+                    }
+                } catch (NameNotFoundException e) {
+                    Log.w(TAG, String.format("Couldn't load wifi icon overlay details for %s, will skip it",
+                            overlayPackage), e);
                 }
-            } catch (NotFoundException | NameNotFoundException e) {
-                Log.w(TAG, String.format("Couldn't load wifi icon overlay details for %s, will skip it",
-                        overlayPackage), e);
             }
         }
 
         List<WifiIconOption> customOptions = new ArrayList<>();
         for (WifiIconOption option : optionsByPrefix.values()) {
-            if (option.isValid(mContext)) {
+            if (option.isValid(mContext) && !option.getIcons().isEmpty()) {
                 customOptions.add(option);
+            } else {
+                Log.w(TAG, String.format("Skipping option %s: valid=%b, icons=%d", 
+                    option.getTitle(), option.isValid(mContext), option.getIcons().size()));
             }
         }
 
@@ -135,13 +161,42 @@ public class WifiIconOptionProvider {
 
     private void addDefault() {
         WifiIconOption option = new WifiIconOption(mContext.getString(R.string.default_theme_title), true);
+        boolean hasIcons = false;
         try {
             for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
-                option.addIcon(loadIconPreviewDrawable(iconName, ANDROID_PACKAGE));
+                try {
+                    option.addIcon(loadIconPreviewDrawable(iconName, ANDROID_PACKAGE));
+                    hasIcons = true;
+                } catch (NotFoundException e) {
+                    Log.d(TAG, String.format("Default WiFi icon %s not found in system", iconName));
+                }
             }
-        } catch (NameNotFoundException | NotFoundException e) {
-            Log.w(TAG, "Didn't find SystemUi package wifi icons, will skip option", e);
+        } catch (NameNotFoundException e) {
+            Log.w(TAG, "Couldn't load default WiFi icons from system", e);
         }
+
+        // If no WiFi icons found in system, try to load from SystemUI
+        if (!hasIcons) {
+            try {
+                for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
+                    try {
+                        option.addIcon(loadIconPreviewDrawable(iconName, SYSUI_PACKAGE));
+                        hasIcons = true;
+                    } catch (NotFoundException e) {
+                        Log.d(TAG, String.format("Default WiFi icon %s not found in SystemUI", iconName));
+                    }
+                }
+            } catch (NameNotFoundException e) {
+                Log.w(TAG, "Couldn't load default WiFi icons from SystemUI", e);
+            }
+        }
+
+        // If still no icons, add a fallback icon or skip this option
+        if (!hasIcons) {
+            Log.w(TAG, "No default WiFi icons found, skipping default option");
+            return;
+        }
+
         option.addOverlayPackage(OVERLAY_CATEGORY_ICON_WIFI, null);
         mOptions.add(option);
     }
