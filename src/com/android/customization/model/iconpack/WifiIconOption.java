@@ -104,7 +104,7 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
         WifiIconManager iconManager = (WifiIconManager) manager;
         OverlayManagerCompat overlayManager = iconManager.getOverlayManager();
         if (mIsDefault) {
-            return overlayManager.getEnabledPackageName(SYSUI_PACKAGE, OVERLAY_CATEGORY_ICON_WIFI) == null;
+            return overlayManager.getEnabledPackageName(ANDROID_PACKAGE, OVERLAY_CATEGORY_ICON_WIFI) == null;
         }
         for (Map.Entry<String, String> overlayEntry : getOverlayPackages().entrySet()) {
             if (overlayEntry.getValue() == null || !overlayEntry.getValue().equals(overlayManager.getEnabledPackageName(determinePackage(overlayEntry.getKey()), overlayEntry.getKey()))) {
@@ -166,8 +166,7 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
      * @return whether this icon option has overlays and previews for all the required packages
      */
     public boolean isValid(Context context) {
-        return mOverlayPackageNames.keySet().size() ==
-                ResourceConstants.getPackagesToOverlay(context).length;
+        return mOverlayPackageNames.containsKey(OVERLAY_CATEGORY_ICON_WIFI);
     }
 
     public boolean isDefault() {
