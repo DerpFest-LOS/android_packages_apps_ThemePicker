@@ -70,7 +70,7 @@ public class WifiIconOptionProvider {
 
         for (String overlayPackage : mOverlayPackages) {
             WifiIconOption option = addOrUpdateOption(optionsByPrefix, overlayPackage,
-                    OVERLAY_CATEGORY_ICON_ANDROID);
+                    OVERLAY_CATEGORY_ICON_WIFI);
             try {
                 for (String iconName : ICONS_FOR_PREVIEW) {
                     option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
