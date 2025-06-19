@@ -186,18 +186,39 @@ public class WifiIconOptionProvider {
         WifiIconOption option = new WifiIconOption(mContext.getString(R.string.default_theme_title), true);
         boolean hasIcons = false;
         
-        // Try to load from SystemUI resources (where wifi icons are now located)
+        // Try to load from Android framework resources first (where default icons typically reside)
         try {
             for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
                 try {
-                    option.addIcon(loadIconPreviewDrawable(iconName, SYSUI_PACKAGE));
+                    option.addIcon(loadIconPreviewDrawable(iconName, ANDROID_PACKAGE));
                     hasIcons = true;
                 } catch (NotFoundException e) {
                     // Icon not found, continue to next
                 }
             }
         } catch (NameNotFoundException e) {
-            Log.w(TAG, "Couldn't load default WiFi icons from SystemUI", e);
+            Log.w(TAG, "Couldn't load default WiFi icons from Android framework", e);
+        }
+
+        // If no icons found in Android framework, try SystemUI
+        if (!hasIcons) {
+            try {
+                for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
+                    try {
+                        option.addIcon(loadIconPreviewDrawable(iconName, SYSUI_PACKAGE));
+                        hasIcons = true;
+                    } catch (NotFoundException e) {
+                        // Icon not found, continue to next
+                    }
+                }
+            } catch (NameNotFoundException e) {
+                Log.w(TAG, "Couldn't load default WiFi icons from SystemUI", e);
+            }
+        }
+
+        // If still no icons, try to discover them in Android framework
+        if (!hasIcons) {
+            hasIcons = tryDiscoverWifiIcons(option, ANDROID_PACKAGE);
         }
 
         // If still no icons, try to discover them in SystemUI
@@ -207,7 +228,7 @@ public class WifiIconOptionProvider {
 
         // If still no icons, add a fallback icon or skip this option
         if (!hasIcons) {
-            Log.w(TAG, "No default WiFi icons found in SystemUI, skipping default option");
+            Log.w(TAG, "No default WiFi icons found in Android framework or SystemUI, skipping default option");
             return;
         }
 
