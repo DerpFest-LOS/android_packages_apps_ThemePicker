@@ -16,6 +16,7 @@
 package com.android.customization.model.iconpack;
 
 import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
+import static com.android.customization.model.ResourceConstants.SYSUI_PACKAGE;
 import static com.android.customization.model.ResourceConstants.ICONS_FOR_PREVIEW;
 import static com.android.customization.model.ResourceConstants.WIFI_ICONS_FOR_PREVIEW;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_WIFI;
@@ -51,12 +52,13 @@ public class WifiIconOptionProvider {
     public WifiIconOptionProvider(Context context, OverlayManagerCompat manager) {
         mContext = context;
         mPm = context.getPackageManager();
-        String[] targetPackages = ResourceConstants.getPackagesToOverlay(context);
+        // For wifi icons, we only want to look for overlays targeting SYSUI_PACKAGE
+        String[] targetPackages = new String[]{SYSUI_PACKAGE};
         mWifiIconsOverlayPackages.addAll(manager.getOverlayPackagesForCategory(
                 OVERLAY_CATEGORY_ICON_WIFI, UserHandle.myUserId(), targetPackages));
         mOverlayPackages = new ArrayList<>();
         mOverlayPackages.addAll(manager.getOverlayPackagesForCategory(OVERLAY_CATEGORY_ICON_WIFI,
-                UserHandle.myUserId(), ResourceConstants.getPackagesToOverlay(mContext)));
+                UserHandle.myUserId(), targetPackages));
     }
 
     public List<WifiIconOption> getOptions() {
@@ -173,6 +175,8 @@ public class WifiIconOptionProvider {
             throws NameNotFoundException, NotFoundException {
         final Resources resources = ANDROID_PACKAGE.equals(packageName)
                 ? Resources.getSystem()
+                : SYSUI_PACKAGE.equals(packageName)
+                ? mPm.getResourcesForApplication(SYSUI_PACKAGE)
                 : mPm.getResourcesForApplication(packageName);
         return resources.getDrawable(
                 resources.getIdentifier(drawableName, "drawable", packageName), null);
@@ -182,28 +186,28 @@ public class WifiIconOptionProvider {
         WifiIconOption option = new WifiIconOption(mContext.getString(R.string.default_theme_title), true);
         boolean hasIcons = false;
         
-        // Try to load from Android framework resources
+        // Try to load from SystemUI resources (where wifi icons are now located)
         try {
             for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
                 try {
-                    option.addIcon(loadIconPreviewDrawable(iconName, ANDROID_PACKAGE));
+                    option.addIcon(loadIconPreviewDrawable(iconName, SYSUI_PACKAGE));
                     hasIcons = true;
                 } catch (NotFoundException e) {
                     // Icon not found, continue to next
                 }
             }
         } catch (NameNotFoundException e) {
-            Log.w(TAG, "Couldn't load default WiFi icons from Android framework", e);
+            Log.w(TAG, "Couldn't load default WiFi icons from SystemUI", e);
         }
 
-        // If still no icons, try to discover them in Android framework
+        // If still no icons, try to discover them in SystemUI
         if (!hasIcons) {
-            hasIcons = tryDiscoverWifiIcons(option, ANDROID_PACKAGE);
+            hasIcons = tryDiscoverWifiIcons(option, SYSUI_PACKAGE);
         }
 
         // If still no icons, add a fallback icon or skip this option
         if (!hasIcons) {
-            Log.w(TAG, "No default WiFi icons found in Android framework, skipping default option");
+            Log.w(TAG, "No default WiFi icons found in SystemUI, skipping default option");
             return;
         }
 
