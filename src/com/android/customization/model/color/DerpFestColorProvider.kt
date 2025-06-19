@@ -64,19 +64,19 @@ class DerpFestColorProvider(private val context: Context) {
 
     private fun getLightColorPreview(colorScheme: ColorScheme): IntArray {
         return intArrayOf(
-            colorScheme.accent1.s600,
-            colorScheme.accent1.s600,
-            colorScheme.accent2.s500,
-            colorScheme.accent3.s300
+            colorScheme.accentColor,
+            colorScheme.accentColor,
+            colorScheme.accentColor,
+            colorScheme.accentColor
         )
     }
 
     private fun getDarkColorPreview(colorScheme: ColorScheme): IntArray {
         return intArrayOf(
-            colorScheme.accent1.s200,
-            colorScheme.accent1.s200,
-            colorScheme.accent2.s500,
-            colorScheme.accent3.s300
+            colorScheme.accentColor,
+            colorScheme.accentColor,
+            colorScheme.accentColor,
+            colorScheme.accentColor
         )
     }
 
