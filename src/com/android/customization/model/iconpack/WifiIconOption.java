@@ -16,6 +16,7 @@
 package com.android.customization.model.iconpack;
 
 import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
+import static com.android.customization.model.ResourceConstants.SYSUI_PACKAGE;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_WIFI;
 
 import android.content.Context;
@@ -104,7 +105,7 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
         WifiIconManager iconManager = (WifiIconManager) manager;
         OverlayManagerCompat overlayManager = iconManager.getOverlayManager();
         if (mIsDefault) {
-            return overlayManager.getEnabledPackageName(ANDROID_PACKAGE, OVERLAY_CATEGORY_ICON_WIFI) == null;
+            return overlayManager.getEnabledPackageName(SYSUI_PACKAGE, OVERLAY_CATEGORY_ICON_WIFI) == null;
         }
         for (Map.Entry<String, String> overlayEntry : getOverlayPackages().entrySet()) {
             if (overlayEntry.getValue() == null || !overlayEntry.getValue().equals(overlayManager.getEnabledPackageName(determinePackage(overlayEntry.getKey()), overlayEntry.getKey()))) {
@@ -144,7 +145,7 @@ public class WifiIconOption implements CustomizationOption<WifiIconOption> {
     private String determinePackage(String category) {
        switch(category) {
            case OVERLAY_CATEGORY_ICON_WIFI:
-               return ANDROID_PACKAGE;
+               return SYSUI_PACKAGE;
            default:
                return null;
        }
