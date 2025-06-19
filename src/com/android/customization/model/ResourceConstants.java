@@ -94,6 +94,15 @@ public interface ResourceConstants {
             "ic_battery_80_24dp"
     };
 
+    String[] WIFI_ICONS_FOR_PREVIEW = {
+            "ic_wifi_0",
+            "ic_wifi_1", 
+            "ic_wifi_2",
+            "ic_wifi_3",
+            "ic_wifi_4",
+            "ic_wifi_off"
+    };
+
     /**
      * Color bundle strings used to reference system resources.
      */

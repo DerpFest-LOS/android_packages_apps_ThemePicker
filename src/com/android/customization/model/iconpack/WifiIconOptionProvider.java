@@ -17,6 +17,7 @@ package com.android.customization.model.iconpack;
 
 import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
 import static com.android.customization.model.ResourceConstants.ICONS_FOR_PREVIEW;
+import static com.android.customization.model.ResourceConstants.WIFI_ICONS_FOR_PREVIEW;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_WIFI;
 
 import android.content.Context;
@@ -72,7 +73,7 @@ public class WifiIconOptionProvider {
             WifiIconOption option = addOrUpdateOption(optionsByPrefix, overlayPackage,
                     OVERLAY_CATEGORY_ICON_WIFI);
             try {
-                for (String iconName : ICONS_FOR_PREVIEW) {
+                for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
                     option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
                 }
             } catch (NotFoundException | NameNotFoundException e) {
@@ -82,7 +83,15 @@ public class WifiIconOptionProvider {
         }
 
         for (String overlayPackage : mWifiIconsOverlayPackages) {
-            addOrUpdateOption(optionsByPrefix, overlayPackage, OVERLAY_CATEGORY_ICON_WIFI);
+            WifiIconOption option = addOrUpdateOption(optionsByPrefix, overlayPackage, OVERLAY_CATEGORY_ICON_WIFI);
+            try {
+                for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
+                    option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
+                }
+            } catch (NotFoundException | NameNotFoundException e) {
+                Log.w(TAG, String.format("Couldn't load wifi icon overlay details for %s, will skip it",
+                        overlayPackage), e);
+            }
         }
 
         List<WifiIconOption> customOptions = new ArrayList<>();
@@ -127,7 +136,7 @@ public class WifiIconOptionProvider {
     private void addDefault() {
         WifiIconOption option = new WifiIconOption(mContext.getString(R.string.default_theme_title), true);
         try {
-            for (String iconName : ICONS_FOR_PREVIEW) {
+            for (String iconName : WIFI_ICONS_FOR_PREVIEW) {
                 option.addIcon(loadIconPreviewDrawable(iconName, ANDROID_PACKAGE));
             }
         } catch (NameNotFoundException | NotFoundException e) {
