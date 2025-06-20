@@ -52,12 +52,13 @@ public class WifiIconOptionProvider {
     public WifiIconOptionProvider(Context context, OverlayManagerCompat manager) {
         mContext = context;
         mPm = context.getPackageManager();
-        String[] targetPackages = ResourceConstants.getPackagesToOverlay(context);
+        // For wifi icons, we only want to look for overlays targeting SYSUI_PACKAGE
+        String[] targetPackages = new String[]{SYSUI_PACKAGE};
         mWifiIconsOverlayPackages.addAll(manager.getOverlayPackagesForCategory(
                 OVERLAY_CATEGORY_ICON_WIFI, UserHandle.myUserId(), targetPackages));
         mOverlayPackages = new ArrayList<>();
         mOverlayPackages.addAll(manager.getOverlayPackagesForCategory(OVERLAY_CATEGORY_ICON_WIFI,
-                UserHandle.myUserId(), ResourceConstants.getPackagesToOverlay(mContext)));
+                UserHandle.myUserId(), targetPackages));
     }
 
     public List<WifiIconOption> getOptions() {
@@ -131,8 +132,8 @@ public class WifiIconOptionProvider {
     private boolean tryDiscoverWifiIcons(WifiIconOption option, String overlayPackage) {
         try {
             Resources resources = mPm.getResourcesForApplication(overlayPackage);
-            // Try common WiFi icon patterns
-            String[] patterns = {"ic_wifi", "wifi", "ic_signal_wifi", "signal_wifi"};
+            // Try common WiFi icon patterns matching the actual naming convention
+            String[] patterns = {"ic_wifi_signal_0", "ic_wifi_signal_1", "ic_wifi_signal_2", "ic_wifi_signal_3", "ic_wifi_signal_4"};
             
             for (String pattern : patterns) {
                 try {
@@ -174,6 +175,8 @@ public class WifiIconOptionProvider {
             throws NameNotFoundException, NotFoundException {
         final Resources resources = ANDROID_PACKAGE.equals(packageName)
                 ? Resources.getSystem()
+                : SYSUI_PACKAGE.equals(packageName)
+                ? mPm.getResourcesForApplication(SYSUI_PACKAGE)
                 : mPm.getResourcesForApplication(packageName);
         return resources.getDrawable(
                 resources.getIdentifier(drawableName, "drawable", packageName), null);
